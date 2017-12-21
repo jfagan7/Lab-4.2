@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.BufferedReader;
 
 public class CSVUtilities {
@@ -20,6 +18,7 @@ public class CSVUtilities {
 	int numColumns;
 	public CSVUtilities(File csv)
 	{
+		CSVData =new ArrayList<String>();
 		FileReader fr = null;
 		try {
 			fr = new FileReader(csv);
@@ -28,7 +27,7 @@ public class CSVUtilities {
 			e.printStackTrace();
 		}
 		BufferedReader br= new BufferedReader(fr);
-		List<Store> stores = new ArrayList<Store>();
+		List<School> schools = new ArrayList<School>();
 		String line;
 		try {
 			line = br.readLine();
@@ -38,9 +37,13 @@ public class CSVUtilities {
 				// each line of 
 				// the file, using a comma as the delimiter
 				String[] attributes = line.split(",");
-				Store store = createStore(attributes); 
+				for(int i=0;i<attributes.length;i++)
+				{
+					CSVData.add(attributes[i]);
+				}
+				School school = createSchool(attributes); 
 				// adding book into ArrayList 
-				stores.add(store); 
+				schools.add(school); 
 				// read next line before looping 
 				// if end of file reached, line would be null 
 				line = br.readLine();
@@ -51,7 +54,6 @@ public class CSVUtilities {
 			e.printStackTrace();
 		}
 		// loop until all lines are read 
-		
 	}
 
 	public List<String> getColumnHeaders()
@@ -59,7 +61,7 @@ public class CSVUtilities {
 		List<String> columnHeaders=new ArrayList<String>();
 		for(int i=0; i<numColumns;i++)
 		{
-			columnHeaders.add(i,CSVData.get(i));
+			columnHeaders.add(CSVData.get(i));
 		}
 		return columnHeaders;
 		
@@ -77,7 +79,7 @@ public class CSVUtilities {
 	public List<Integer> getDataInt(int column)
 	{
 		List<Integer>data=new ArrayList<Integer>();
-		for(int i=0; i<column;i++)
+		for(int i=0; i<CSVData.size();i+=numColumns)
 		{
 			String number = CSVData.get(i);
 			data.add(Integer.parseInt(number));
@@ -87,21 +89,22 @@ public class CSVUtilities {
 	public List<Double> getDataDouble(int column)
 	{
 		List<Double>data=new ArrayList<Double>();
-		for(int i=0; i<column;i++)
+		for(int i=0; i<CSVData.size();i+=numColumns)
 		{
 			String number = CSVData.get(i);
 			data.add(Double.parseDouble(number));
 		}
 		return data;
 	}
-	private static Store createStore(String[] metadata) 
+	private static School createSchool(String[] metadata) 
 	{ 
-		String name = metadata[0]; 
-	String address = metadata[1]; 
-	String city = metadata[3];
-	String state = metadata[4];
-	String primary = metadata[5];
+		String schoolID = metadata[0]; 
+		String name = metadata[1]; 
+		String numOfTestTakers = metadata[2];
+		String avgCRScore = metadata[3];
+		String avgMathScore = metadata[4];
+		String avgWritingScore= metadata[5];
 	// create and return book of this metadata 
-	return new Store(name, address, city, state, primary);
+		return new School(schoolID,name, numOfTestTakers, avgCRScore, avgMathScore, avgWritingScore);
 	}
 }
