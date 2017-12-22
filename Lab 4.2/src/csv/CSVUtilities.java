@@ -1,16 +1,11 @@
 package csv;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.io.BufferedReader;
 
 public class CSVUtilities {
@@ -27,28 +22,28 @@ public class CSVUtilities {
 			e.printStackTrace();
 		}
 		BufferedReader br= new BufferedReader(fr);
-		List<School> schools = new ArrayList<School>();
 		String line;
 		try {
 			line = br.readLine();
+			String[] attributes = line.split(",");
+			numColumns=attributes.length;
 			while (line != null) 
 			{ 
 				// use string.split to load a string array with the values from 
 				// each line of 
 				// the file, using a comma as the delimiter
-				String[] attributes = line.split(",");
+				attributes = line.split(",");
 				for(int i=0;i<attributes.length;i++)
 				{
+				//	System.out.println(attributes[i]);
 					CSVData.add(attributes[i]);
-				}
-				School school = createSchool(attributes); 
-				// adding book into ArrayList 
-				schools.add(school); 
+				} 
+				// adding book into ArrayList  
 				// read next line before looping 
 				// if end of file reached, line would be null 
 				line = br.readLine();
 			}
-				System.out.print(line);
+				//System.out.print(line);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,6 +57,7 @@ public class CSVUtilities {
 		for(int i=0; i<numColumns;i++)
 		{
 			columnHeaders.add(CSVData.get(i));
+			System.out.println(columnHeaders.get(i));
 		}
 		return columnHeaders;
 		
@@ -69,7 +65,7 @@ public class CSVUtilities {
 	public List<String> getDataString(int column)
 	{
 		List<String>data=new ArrayList<String>();
-		for(int i=numColumns+column; i<CSVData.size();i+=numColumns)
+		for(int i=column+numColumns; i<CSVData.size();i+=numColumns)
 		{
 			data.add(CSVData.get(i));
 		}
@@ -96,7 +92,7 @@ public class CSVUtilities {
 		}
 		return data;
 	}
-	private static School createSchool(String[] metadata) 
+	/*private static School createSchool(String[] metadata) 
 	{ 
 		String schoolID = metadata[0]; 
 		String name = metadata[1]; 
@@ -106,5 +102,5 @@ public class CSVUtilities {
 		String avgWritingScore= metadata[5];
 	// create and return book of this metadata 
 		return new School(schoolID,name, numOfTestTakers, avgCRScore, avgMathScore, avgWritingScore);
-	}
+	}*/
 }
