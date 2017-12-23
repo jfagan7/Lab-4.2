@@ -75,7 +75,7 @@ public class CSVUtilities {
 	public List<Integer> getDataInt(int column)
 	{
 		List<Integer>data=new ArrayList<Integer>();
-		for(int i=0; i<CSVData.size();i+=numColumns)
+		for(int i=column+numColumns; i<CSVData.size();i+=numColumns)
 		{
 			String number = CSVData.get(i);
 			data.add(Integer.parseInt(number));
@@ -85,22 +85,11 @@ public class CSVUtilities {
 	public List<Double> getDataDouble(int column)
 	{
 		List<Double>data=new ArrayList<Double>();
-		for(int i=0; i<CSVData.size();i+=numColumns)
+		for(int i=column+numColumns; i<CSVData.size();i+=numColumns)
 		{
 			String number = CSVData.get(i);
 			data.add(Double.parseDouble(number));
 		}
 		return data;
 	}
-	/*private static School createSchool(String[] metadata) 
-	{ 
-		String schoolID = metadata[0]; 
-		String name = metadata[1]; 
-		String numOfTestTakers = metadata[2];
-		String avgCRScore = metadata[3];
-		String avgMathScore = metadata[4];
-		String avgWritingScore= metadata[5];
-	// create and return book of this metadata 
-		return new School(schoolID,name, numOfTestTakers, avgCRScore, avgMathScore, avgWritingScore);
-	}*/
 }

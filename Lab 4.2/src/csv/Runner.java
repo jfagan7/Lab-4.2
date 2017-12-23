@@ -7,7 +7,7 @@ public class Runner {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		File data = new File("SimpleSATResults.csv");
+		File data = new File("SATResults2012.csv");
 		CSVUtilities test=new CSVUtilities(data);
 		
 		//List<String>headers= test.getColumnHeaders();
@@ -15,7 +15,7 @@ public class Runner {
 		
 		//System.out.print(headers);
 		System.out.println(test.getColumnHeaders());
-		System.out.println(test.getDataString(1));
+		System.out.println(test.getDataInt(2));
 	}
 
 }
